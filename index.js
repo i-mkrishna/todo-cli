@@ -182,6 +182,37 @@ program
             console.log("Todo not found!");
         }
     });
+///  command to check if it is done or not
+program
+    .command("ismark")
+    .description("Check if a todo item is done or not")
+    .argument("<Todo_Title>", "Enter the todo title to check")
+    .action((todoTitle) => {
+        let todos = readTodos();
+        let todoFound = false;
+        let done = false;
+
+        todos = todos.map((todo) => {
+            if (todo.Title === todoTitle) {
+                // console.log("Found matching todo:", todo.Title);
+                todoFound = true;
+                done = todo.Done || false;
+            }
+            return todo;
+        });
+
+
+        if (todoFound) {
+            writeTodos(todos);
+            if (done) {
+                console.log(todoTitle, "is Done");
+            } else {
+                console.log(todoTitle, "is not done");
+            }
+        } else {
+            console.log("Todo not found!");
+        }
+    });
 
 // Parse and execute the commands
 program.parse();
